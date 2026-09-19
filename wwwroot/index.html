@@ -265,6 +265,48 @@ section{scroll-margin-top:86px}
   .featured-info{padding:24px 20px}
 }
 
+@media (max-width:900px){
+  .hero{padding:42px 0 60px}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{width:100%}
+  .hero-sub{font-size:15.5px;line-height:1.9}
+  .sec{padding:64px 0}
+  .ep-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+}
+
+@media (max-width:640px){
+  .container{padding-inline:14px}
+  .topbar{font-size:11px;padding:7px 10px}
+  .brand-name{font-size:20px}
+  .brand-sub{font-size:10px}
+  .logo-badge{width:42px;height:42px}
+  .nav{height:68px}
+  .hero{padding:34px 0 46px}
+  .hero-logo{width:clamp(130px,42vw,170px)}
+  .hero-kicker{font-size:11px;letter-spacing:1px;padding:6px 12px}
+  .hero h1{font-size:clamp(26px,9vw,38px);line-height:1.45}
+  .hero-sub{font-size:14.5px;line-height:1.85;margin-bottom:24px}
+  .hero .orn{margin-bottom:32px}
+  .sec-head h2{font-size:clamp(24px,8vw,34px)}
+  .sec-head p{font-size:15px}
+  .btn{width:100%;justify-content:center}
+  .hero-actions{gap:10px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:18px 10px}
+  .filters{justify-content:flex-start}
+  .chip{flex:1 1 calc(50% - 8px);text-align:center}
+  .ep-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:480px){
+  .topbar{letter-spacing:0}
+  .brand{gap:8px}
+  .brand-name{font-size:18px}
+  .brand-sub{display:none}
+  .nav-cta{display:none}
+  .hero-kicker{font-size:10px}
+  .chip{flex-basis:100%}
+}
+
 /* ============ POSTERS ============ */
 .poster{
   position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;
