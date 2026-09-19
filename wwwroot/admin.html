@@ -14,7 +14,20 @@ label{font-weight:700;display:block;margin:12px 0 6px}input,textarea{width:100%;
 #editor{position:absolute;top:12px;left:12px;width:min(410px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:#fbf6ed;color:#2b2119;border:1px solid #d4af37;border-radius:18px;box-shadow:0 20px 70px #0007;padding:18px;z-index:90}.editor-title{display:flex;justify-content:space-between;gap:8px;align-items:center}.editor-title h3{margin:0;color:#8b1e1e}.key{font-size:11px;color:#8c7b6b;direction:ltr;text-align:left}.tip{background:#fff8df;border:1px solid #ead28a;border-radius:10px;padding:9px;font-size:12px;color:#6d5314}
 #settings{position:absolute;top:74px;left:50%;transform:translateX(-50%);width:min(480px,calc(100% - 24px));background:#fbf6ed;color:#2b2119;border:1px solid #d4af37;border-radius:18px;padding:20px;z-index:95;box-shadow:0 20px 70px #0008}
 .admin-hit{outline:2px dashed rgba(212,175,55,.9)!important;outline-offset:4px!important;cursor:text!important}.admin-hit:hover{background:rgba(212,175,55,.12)!important}.video-admin{position:absolute;inset:auto 10px 10px 10px;display:flex;justify-content:space-between;gap:7px;z-index:30;pointer-events:auto}.video-admin .btn{padding:8px 10px;font-size:12px;box-shadow:0 4px 15px #0005}.video-card-wrap{position:relative}
-@media(max-width:700px){.toolbar{height:auto;min-height:62px}.toolbar .tools{max-width:70%;justify-content:flex-end}.toolbar .btn{font-size:11px;padding:7px 9px}#editor{top:8px;left:8px;width:calc(100% - 16px);max-height:55%}}
+@media(max-width:700px){
+  body{overflow:auto}
+  #login{padding:18px}
+  .login-card{padding:22px}
+  .toolbar{height:auto;min-height:62px;flex-wrap:wrap;align-items:flex-start;padding:10px 12px}
+  .brand{font-size:14px;white-space:nowrap}
+  .toolbar .tools{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-content:stretch}
+  .toolbar .btn{font-size:11px;padding:8px 10px;width:100%}
+  #stage{height:calc(100vh - 138px);min-height:420px}
+  #editor{top:8px;left:8px;width:calc(100% - 16px);max-height:55%}
+  #settings{top:10px;left:10px;right:10px;transform:none;width:auto;max-height:70%;overflow:auto}
+  .video-admin{left:10px;right:10px;bottom:10px;inset:auto 10px 10px 10px}
+  .video-admin .btn{flex:1}
+}
 </style>
 </head>
 <body>
