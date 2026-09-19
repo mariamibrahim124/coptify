@@ -1,0 +1,13 @@
+bin/
+obj/
+
+coptify.db
+*.db-shm
+*.db-wal
+
+node_modules/
+dist/
+
+.env
+.env.*
+!.env.example

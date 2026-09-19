@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>كوبتيفاي | محرر الموقع</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Arial,sans-serif;background:#15110d;color:#f8f0e4;overflow:hidden}
+#login{height:100%;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 0,#3b2518,#120e0b 60%)}
+.login-card{width:min(430px,100%);background:#fbf6ed;color:#2b2119;border:1px solid #d4af37;border-radius:22px;padding:30px;box-shadow:0 25px 80px #0008}.login-card h1{margin-top:0;color:#8b1e1e}.muted{color:#7d6e61}
+label{font-weight:700;display:block;margin:12px 0 6px}input,textarea{width:100%;font:inherit;border:1px solid #d9cbb6;border-radius:11px;padding:12px;background:#fff}textarea{min-height:150px;resize:vertical}.btn{border:0;border-radius:11px;padding:11px 15px;cursor:pointer;font:inherit;font-weight:700}.gold{background:#d4af37;color:#24180b}.dark{background:#21170f;color:#fff}.red{background:#8b1e1e;color:#fff}.light{background:#f1eadf;color:#3a2b20}.danger{background:#b42318;color:#fff}.row{display:flex;gap:8px;flex-wrap:wrap}.notice{padding:10px 12px;border-radius:10px;margin:10px 0}.ok{background:#dcfce7;color:#166534}.err{background:#fee2e2;color:#991b1b}
+.hidden{display:none!important}
+#app{height:100%;display:flex;flex-direction:column}.toolbar{height:62px;flex:none;background:#21170f;border-bottom:1px solid #4d3824;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;gap:10px;z-index:100}.brand{font-weight:800;color:#f0d77a}.toolbar .tools{display:flex;gap:7px;flex-wrap:wrap}.toolbar .btn{padding:8px 11px;font-size:13px}
+#stage{position:relative;flex:1;background:#eee;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block;background:#faf6ee}
+#editor{position:absolute;top:12px;left:12px;width:min(410px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:#fbf6ed;color:#2b2119;border:1px solid #d4af37;border-radius:18px;box-shadow:0 20px 70px #0007;padding:18px;z-index:90}.editor-title{display:flex;justify-content:space-between;gap:8px;align-items:center}.editor-title h3{margin:0;color:#8b1e1e}.key{font-size:11px;color:#8c7b6b;direction:ltr;text-align:left}.tip{background:#fff8df;border:1px solid #ead28a;border-radius:10px;padding:9px;font-size:12px;color:#6d5314}
+#settings{position:absolute;top:74px;left:50%;transform:translateX(-50%);width:min(480px,calc(100% - 24px));background:#fbf6ed;color:#2b2119;border:1px solid #d4af37;border-radius:18px;padding:20px;z-index:95;box-shadow:0 20px 70px #0008}
+.admin-hit{outline:2px dashed rgba(212,175,55,.9)!important;outline-offset:4px!important;cursor:text!important}.admin-hit:hover{background:rgba(212,175,55,.12)!important}.video-admin{position:absolute;inset:auto 10px 10px 10px;display:flex;justify-content:space-between;gap:7px;z-index:30;pointer-events:auto}.video-admin .btn{padding:8px 10px;font-size:12px;box-shadow:0 4px 15px #0005}.video-card-wrap{position:relative}
+@media(max-width:700px){.toolbar{height:auto;min-height:62px}.toolbar .tools{max-width:70%;justify-content:flex-end}.toolbar .btn{font-size:11px;padding:7px 9px}#editor{top:8px;left:8px;width:calc(100% - 16px);max-height:55%}}
+</style>
+</head>
+<body>
+<div id="login">
+  <div class="login-card">
+    <h1>كوبتيفاي — إدارة الموقع</h1>
+    <p class="muted">هذه الصفحة هي نسخة الموقع نفسها ولكن مع أدوات الإدارة فوقها.</p>
+    <div id="loginMsg"></div>
+    <label>اسم المستخدم</label><input id="username" autocomplete="username" value="admin">
+    <label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password">
+    <button class="btn gold" style="width:100%;margin-top:16px" onclick="login()">دخول إلى لوحة الإدارة</button>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="toolbar">
+    <div class="brand">✦ كوبتيفاي — وضع إدارة الموقع</div>
+    <div class="tools">
+      <button class="btn gold" onclick="addVideo()">＋ إضافة فيديو</button>
+      <button class="btn light" onclick="openSettings()">⚙ الحساب</button>
+      <button class="btn light" onclick="refreshSite()">↻ تحديث</button>
+      <button class="btn red" onclick="logout()">خروج</button>
+    </div>
+  </div>
+  <div id="stage">
+    <iframe id="site" src="/" title="معاينة موقع كوبتيفاي"></iframe>
+    <div id="editor" class="hidden">
+      <div class="editor-title"><h3>تعديل العنصر</h3><button class="btn light" onclick="closeEditor()">✕</button></div>
+      <div id="editorMeta" class="key"></div>
+      <div class="tip" style="margin-top:10px">أنتِ بتعدّلي نفس العنصر الظاهر في الموقع. بعد الحفظ، التغيير يظهر للزوار مباشرة.</div>
+      <label>النص</label><textarea id="editValue"></textarea>
+      <div class="row" style="margin-top:10px"><button class="btn gold" onclick="saveEditor()">حفظ التعديل</button><button class="btn light" onclick="closeEditor()">إلغاء</button></div>
+    </div>
+    <div id="settings" class="hidden">
+      <div class="editor-title"><h3>إعدادات حساب الـAdmin</h3><button class="btn light" onclick="closeSettings()">✕</button></div>
+      <p class="muted">غيّري اسم المستخدم أو كلمة المرور. يلزم إدخال كلمة المرور الحالية للتأكيد.</p>
+      <label>كلمة المرور الحالية</label><input id="currentPass" type="password" autocomplete="current-password">
+      <label>اسم المستخدم الجديد</label><input id="newUser" autocomplete="username">
+      <label>كلمة المرور الجديدة <span class="muted">(اختياري)</span></label><input id="newPass" type="password" autocomplete="new-password" placeholder="8 أحرف على الأقل">
+      <div id="settingsMsg"></div>
+      <button class="btn gold" style="width:100%;margin-top:12px" onclick="saveSettings()">حفظ بيانات الحساب</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);let current=null;let contents=[];
+async function api(url,opt={}){const r=await fetch(url,{credentials:'same-origin',...opt});if(r.status===401){showLogin();throw new Error('unauthorized')}if(!r.ok){let t=await r.text();throw new Error(t||'حدث خطأ')}return r.status===204?null:r.json()}
+function showLogin(){ $('login').classList.remove('hidden');$('app').classList.add('hidden'); }
+function showApp(){ $('login').classList.add('hidden');$('app').classList.remove('hidden'); }
+async function check(){try{await api('/api/me');showApp();await loadContents();bindSite()}catch(e){showLogin()}}
+async function login(){try{await api('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:$('username').value.trim(),password:$('password').value})});showApp();await loadContents();bindSite()}catch(e){$('loginMsg').innerHTML='<div class="notice err">اسم المستخدم أو كلمة المرور غير صحيحة.</div>'}}
+async function logout(){await api('/api/logout',{method:'POST'});location.reload()}
+async function loadContents(){contents=await api('/api/admin/content')}
+function frame(){return $('site').contentDocument}
+function findContent(key){return contents.find(x=>(x.key??x.Key)===key)}
+function visualKey(el){
+  // Stable key based on the element's DOM path, not its visible text, so edited text keeps the same record.
+  const parts=[];let n=el;
+  while(n&&n.nodeType===1&&n.id!=='site'){
+    let i=1, p=n;
+    while((p=p.previousElementSibling)) i++;
+    parts.unshift((n.tagName||'x').toLowerCase()+':'+i); n=n.parentElement;
+  }
+  let h=2166136261; const raw=parts.join('/');
+  for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}
+  return 'visual.text.'+(h>>>0).toString(36);
+}
+function editableCandidates(d){
+  const selectors='a,button,[role=button],.fa-more';
+  return [...d.querySelectorAll(selectors)].filter(el=>{
+    if(el.closest('#epGrid,.modal,[aria-hidden=\"true\"]')) return false;
+    if(!el.textContent || !el.textContent.trim()) return false;
+    if(el.matches('[data-cms-key]')) return false;
+    return !el.querySelector(selectors);
+  });
+}
+async function ensureVisualContent(){
+  const d=frame(); if(!d)return;
+  const candidates=editableCandidates(d); let changed=false;
+  for(const el of candidates){
+    const key=visualKey(el); el.dataset.cmsKey=key;
+    if(!findContent(key)){
+      const value=editableText(el);
+      try{const created=await api('/api/content',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,label:'عنصر قابل للتعديل — '+value.slice(0,60),section:'واجهة الموقع',value})});contents.push(created);changed=true;}catch(e){console.warn('Could not register visual content',key,e)}
+    }
+  }
+  return changed;
+}
+function editableText(el){
+  const walker=el.ownerDocument.createTreeWalker(el,NodeFilter.SHOW_TEXT); let out='';
+  while(walker.nextNode()) out+=walker.currentNode.nodeValue;
+  return out.replace(/\s+/g,' ').trim();
+}
+function replaceEditableText(el,value){
+  const walker=el.ownerDocument.createTreeWalker(el,NodeFilter.SHOW_TEXT); const nodes=[];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  if(!nodes.length){el.textContent=value;return}
+  nodes[0].nodeValue=value;
+  for(let i=1;i<nodes.length;i++) nodes[i].nodeValue='';
+}
+async function bindSite(){
+  const d=frame();if(!d)return;
+  await ensureVisualContent();
+  // Existing CMS fields + visual linked/button text are editable in-place.
+  const editable=[...d.querySelectorAll('[data-cms-key]')];
+  editable.push(...editableCandidates(d));
+  const seen=new Set();
+  editable.forEach(el=>{
+    if(seen.has(el))return; seen.add(el);
+    el.classList.add('admin-hit');
+    el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openEditorFor(el)},true);
+  });
+  decorateVideos();
+}
+function openEditorFor(el){
+  const key=el.dataset.cmsKey;const item=findContent(key);
+  if(!item){alert('العنصر موجود في التصميم لكنه غير مسجل في قاعدة البيانات. اضغطي تحديث ثم حاولي مرة أخرى.');return}
+  current={el,item};$('editorMeta').textContent=`${item.section||'واجهة الموقع'} • ${key}`;$('editValue').value=editableText(el);$('editor').classList.remove('hidden');$('editValue').focus();
+}
+async function saveEditor(){if(!current)return;const value=$('editValue').value;const item={...current.item,value};try{await api('/api/content/'+(item.id??item.Id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:item.id??item.Id,key:item.key??item.Key,label:item.label??item.Label,section:item.section??item.Section,value})});replaceEditableText(current.el,value);const i=contents.findIndex(x=>(x.id??x.Id)===(item.id??item.Id));if(i>=0)contents[i].value=value;closeEditor();}catch(e){alert('تعذر حفظ التعديل.')}}
+function closeEditor(){current=null;$('editor').classList.add('hidden')}
+async function decorateVideos(){
+  const d=frame();if(!d)return;
+  const grid=d.getElementById('epGrid');if(!grid)return;
+  grid.style.position='relative';
+  d.querySelectorAll('.coptify-admin-video').forEach(x=>x.remove());
+  const videos=await api('/api/admin/videos');
+  const cards=[...grid.querySelectorAll('.ep-card')];
+  // The public grid is ordered the same way as /api/videos.
+  cards.forEach((card,i)=>{
+    const v=videos.filter(x=>x.published??x.Published)[i] ?? videos[i];
+    if(!v)return;
+    card.style.position='relative';card.classList.add('video-card-wrap');
+    const bar=d.createElement('div');bar.className='video-admin coptify-admin-video';
+    bar.innerHTML=`<button class="btn gold">✎ تعديل الفيديو</button><button class="btn danger">🗑 حذف</button>`;
+    bar.children[0].addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openVideoForm(v)});
+    bar.children[1].addEventListener('click',e=>{e.preventDefault();e.stopPropagation();deleteVideo(v.id??v.Id)});
+    card.appendChild(bar);
+  });
+  const section=d.getElementById('episodes');if(section&&!section.querySelector('.coptify-add-video')){const b=d.createElement('button');b.className='btn btn-gold coptify-add-video';b.textContent='＋ إضافة فيديو جديد';b.style.cssText='position:absolute;left:24px;top:24px;z-index:20;padding:10px 16px;border-radius:10px;border:0;cursor:pointer';b.onclick=e=>{e.preventDefault();e.stopPropagation();addVideo()};section.style.position='relative';section.appendChild(b)}
+}
+let videoEditing=null;
+function addVideo(){openVideoForm(null)}
+function openVideoForm(v){
+  videoEditing=v;closeEditor();
+  const d=frame();const old=d.getElementById('coptifyVideoEditor');if(old)old.remove();
+  const box=d.createElement('div');box.id='coptifyVideoEditor';box.dir='rtl';box.style.cssText='position:fixed;inset:20px auto 20px 20px;width:min(430px,calc(100vw - 40px));overflow:auto;background:#fbf6ed;color:#2b2119;border:2px solid #d4af37;border-radius:18px;padding:18px;z-index:999999;box-shadow:0 25px 90px #0009;font-family:Arial,sans-serif';
+  const val=(k,d='')=>v?.[k]??v?.[k.charAt(0).toUpperCase()+k.slice(1)]??d;
+  box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;color:#8b1e1e">${v?'تعديل الفيديو':'إضافة فيديو جديد'}</h2><button id="xv" style="border:0;border-radius:9px;padding:8px;cursor:pointer">✕</button></div>
+  <label>عنوان الفيديو</label><input id="vvtitle" value="${esc(val('title'))}">
+  <label>التصنيف</label><input id="vvcat" value="${esc(val('category'))}">
+  <label>رقم الحلقة</label><input id="vvep" value="${esc(val('episodeNumber'))}">
+  <label>التاريخ</label><input id="vvdate" value="${esc(val('publishedDate'))}">
+  <label>المدة</label><input id="vvdur" value="${esc(val('duration'))}">
+  <label>رابط صورة الغلاف</label><input id="vvthumb" value="${esc(val('thumbnailUrl'))}">
+  <label>الوصف</label><textarea id="vvdesc" style="width:100%;min-height:110px;padding:10px;border:1px solid #d9cbb6;border-radius:10px;font:inherit">${esc(val('description'))}</textarea>
+  <label>رابط Facebook</label><input id="vvurl" value="${esc(val('videoUrl'))}" placeholder="https://www.facebook.com/...">
+  <label><input id="vvpub" type="checkbox" ${val('published',true)?'checked':''}> منشور</label>
+  <div id="vmsg"></div><button id="sv" style="width:100%;margin-top:12px;border:0;border-radius:10px;padding:12px;background:#d4af37;font-weight:700;cursor:pointer">حفظ الفيديو</button>`;
+  d.body.appendChild(box);box.querySelector('#xv').onclick=()=>box.remove();box.querySelector('#sv').onclick=()=>saveVideoFromBox(box);
+}
+function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+async function saveVideoFromBox(box){const g=id=>box.querySelector('#'+id);const data={title:g('vvtitle').value,category:g('vvcat').value,episodeNumber:g('vvep').value,publishedDate:g('vvdate').value,duration:g('vvdur').value,thumbnailUrl:g('vvthumb').value,description:g('vvdesc').value,videoUrl:g('vvurl').value,published:g('vvpub').checked,sortOrder:videoEditing?.sortOrder??0};if(!data.title||!data.videoUrl){g('vmsg').innerHTML='<div class="notice err">العنوان ورابط Facebook مطلوبان.</div>';return}try{const id=videoEditing?.id??videoEditing?.Id;await api('/api/videos'+(id?'/'+id:''),{method:id?'PUT':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(id?{...data,id}:data)});box.remove();refreshSite()}catch(e){g('vmsg').innerHTML='<div class="notice err">تعذر حفظ الفيديو.</div>'}}
+async function deleteVideo(id){if(!confirm('هل أنتِ متأكدة من حذف الفيديو؟'))return;await api('/api/videos/'+id,{method:'DELETE'});refreshSite()}
+function refreshSite(){const f=$('site');f.src='/';f.onload=async()=>{await loadContents();bindSite()}}
+async function openSettings(){const a=await api('/api/admin/account');$('newUser').value=a.username||'';$('currentPass').value='';$('newPass').value='';$('settingsMsg').innerHTML='';$('settings').classList.remove('hidden')}
+function closeSettings(){$('settings').classList.add('hidden')}
+async function saveSettings(){try{const r=await api('/api/admin/account',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({currentPassword:$('currentPass').value,newUsername:$('newUser').value,newPassword:$('newPass').value})});$('settingsMsg').innerHTML='<div class="notice ok">تم تحديث بيانات الحساب.</div>';$('currentPass').value='';$('newPass').value='';$('newUser').value=r.username}catch(e){$('settingsMsg').innerHTML='<div class="notice err">تعذر تحديث الحساب. تأكدي من كلمة المرور الحالية.</div>'}}
+$('site').addEventListener('load',()=>{if(!$('app').classList.contains('hidden'))setTimeout(bindSite,500)});check();
+</script>
+</body>
+</html>
