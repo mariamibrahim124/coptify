@@ -307,6 +307,71 @@ section{scroll-margin-top:86px}
   .chip{flex-basis:100%}
 }
 
+html[lang="en"]{
+  direction:ltr;
+}
+
+html[lang="en"] body,
+html[lang="en"] .brand-text,
+html[lang="en"] .nav-links,
+html[lang="en"] .hero-sub,
+html[lang="en"] .ep-title,
+html[lang="en"] .ep-excerpt,
+html[lang="en"] .sec-head p,
+html[lang="en"] .tl-trigger h3,
+html[lang="en"] .faq-item,
+html[lang="en"] .newsletter-box,
+html[lang="en"] .article-card,
+html[lang="en"] .footer-copy,
+html[lang="en"] .footer-links{
+  text-align:left;
+}
+
+@media (max-width:640px){
+  .nav{min-height:68px;height:auto;padding-block:10px}
+  .nav-links a{font-size:15px;padding:12px 10px}
+  .brand-text{max-width:120px}
+  .brand-name{font-size:22px}
+  .hero-actions .btn{padding:12px 14px}
+  .topbar{line-height:1.6}
+
+  .hero{padding:30px 0 48px}
+  .hero-inner{display:flex;flex-direction:column;align-items:center}
+  .hero-logo{margin-bottom:12px}
+  .hero-kicker{margin-bottom:12px}
+  .hero-sub{padding:0 4px}
+  .hero-actions{width:100%;margin-bottom:28px}
+  .hero-actions .btn{width:100%}
+  .sec{padding:56px 0}
+  .sec-head{margin-bottom:28px}
+  .ep-grid{gap:16px}
+  .ep-card{border-radius:14px}
+  .ep-body{padding:16px 16px 18px}
+  .ep-title{font-size:18px}
+  .ep-excerpt{font-size:13.5px}
+  .newsletter-box{padding:20px 16px}
+  .newsletter-form{grid-template-columns:1fr}
+  .newsletter-form .btn{width:100%}
+  .footer{padding:28px 0 20px}
+}
+
+@media (max-width:480px){
+  .nav{gap:8px}
+  .brand{flex:1;min-width:0}
+  .brand-text{min-width:0}
+  .logo-badge{width:38px;height:38px}
+  .nav-links{padding-top:84px}
+  .topbar{font-size:10.5px}
+  .hero-logo{width:clamp(120px,36vw,150px)}
+  .hero h1{font-size:clamp(24px,8vw,34px);line-height:1.38}
+  .hero-kicker{font-size:10px}
+  .btn{font-size:14px}
+  .sec-head h2{margin-bottom:10px}
+  .ep-foot{flex-wrap:wrap;gap:8px}
+  .ep-foot span{font-size:12px}
+  .chip{flex-basis:100%}
+}
+
 /* ============ POSTERS ============ */
 .poster{
   position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;
@@ -499,6 +564,7 @@ section{scroll-margin-top:86px}
   font-family:var(--ff-head);font-size:14.5px;color:#D9C7A4;line-height:1.9;
   border-top:1px solid rgba(212,175,55,.2);padding-top:14px;margin-top:auto;font-style:italic;
 }
+.fa-full{display:none}
 .fa-more{font-size:13px;color:var(--gold);font-weight:700;display:inline-flex;align-items:center;gap:6px}
 .fa-more .ic{width:14px;height:14px}
 
@@ -823,7 +889,7 @@ section{scroll-margin-top:86px}
 <a class="skip" data-cms-key="auto.text.001" href="#main">تخطَّ إلى المحتوى الرئيسي</a>
 <!-- ============ TOPBAR ============ -->
 <div class="topbar">
-<b data-cms-key="auto.text.002">حلقة جديدة كل جمعة</b><span class="sep" data-cms-key="auto.text.003">•</span>انضم إلى أكثر من 12,000 متابع يوثّقون ذاكرة الكنيسة القبطية
+<b data-cms-key="auto.text.002">حلقة جديدة كل جمعة</b>
 </div>
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="siteHeader">
@@ -847,7 +913,6 @@ section{scroll-margin-top:86px}
 <a data-cms-key="auto.text.013" href="#faq">الأسئلة الشائعة</a>
 </div>
 <div class="nav-cta">
-<a class="btn btn-gold btn-sm" data-cms-key="auto.text.014" href="#newsletter">اشترك في النشرة</a>
 <button aria-controls="navLinks" aria-expanded="false" aria-label="فتح القائمة" class="burger" id="burger" type="button">
 <svg aria-hidden="true" class="ic"><use href="#i-menu"></use></svg>
 </button>
@@ -1548,7 +1613,6 @@ section{scroll-margin-top:86px}
 </div>
 <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
 <a class="btn btn-red btn-sm" data-cms-key="auto.text.136" href="#episodes">ابدأ من الحلقات</a>
-<a class="btn btn-outline btn-sm" data-cms-key="auto.text.137" href="#newsletter">اشترك في النشرة</a>
 </div>
 </div>
 </div>
@@ -1593,7 +1657,7 @@ section{scroll-margin-top:86px}
 <span class="txt" data-cms-key="auto.text.146">كيف أقترح موضوعًا لحلقة قادمة؟</span>
 <span aria-hidden="true" class="faq-chev"><svg class="ic"><use href="#i-chevron"></use></svg></span>
 </button>
-<div class="faq-a"><div><p data-cms-key="page.text.148">يمكنك إرسال اقتراحك مباشرة إلى بريد المنصة <a data-cms-key="auto.text.147" href="mailto:hello@coptify.com" style="color:var(--red);font-weight:700">hello@coptify.com</a>، أو عبر رسالة خاصة على صفحتنا على فيسبوك أو إنستجرام. نقرأ كل الاقتراحات، ونُدرج الأكثر تكرارًا في خطة الحلقات الشهرية.</p></div></div>
+<div class="faq-a"><div><p data-cms-key="page.text.148">يمكنك إرسال اقتراحك مباشرة إلى بريد المنصة <a data-cms-key="auto.text.147" href="mailto:coptify.page@gmail.com" style="color:var(--red);font-weight:700">coptify.page@gmail.com</a>، أو عبر رسالة خاصة على صفحتنا على فيسبوك أو إنستجرام. نقرأ كل الاقتراحات، ونُدرج الأكثر تكرارًا في خطة الحلقات الشهرية.</p></div></div>
 </div>
 <div class="faq-item">
 <button aria-expanded="false" class="faq-q" type="button">
@@ -1612,24 +1676,6 @@ section{scroll-margin-top:86px}
 <div class="faq-a"><div><p data-cms-key="page.text.150">كوبتيفاي مبادرة مستقلة غير رسمية، تعمل بمشاركة باحثين ومتخصصين في التاريخ الكنسي والطقس القبطي، وبمراجعة من آباء وخدام ذوي خبرة. ونرحّب بأي ملاحظة تصحيحية تُسهم في دقّة المحتوى.</p></div></div>
 </div>
 </div>
-</div>
-</section>
-<!-- ============ NEWSLETTER ============ -->
-<section class="news" id="newsletter">
-<div class="container news-inner">
-<span class="eyebrow" data-cms-key="auto.text.152" style="color:var(--gold);margin-bottom:14px">النشرة البريدية</span>
-<h2 data-cms-key="page.text.151">لا تفوّت حلقة الجمعة</h2>
-<p data-cms-key="page.text.152">رسالة واحدة كل أسبوع: الحلقة الجديدة، مقال مختار، ومصطلح من المعجم مع شرحه. بلا إعلانات، وبلا إزعاج.</p>
-<form class="news-form" id="newsForm" novalidate="">
-<label class="sr-only" data-cms-key="auto.text.153" for="newsEmail">بريدك الإلكتروني</label>
-<input autocomplete="email" id="newsEmail" name="email" placeholder="أدخل بريدك الإلكتروني" required="" type="email"/>
-<button class="btn btn-gold" type="submit">
-<svg aria-hidden="true" class="ic"><use href="#i-mail"></use></svg>
-        اشترك الآن
-      </button>
-</form>
-<div aria-live="polite" class="news-msg" id="newsMsg" role="status"></div>
-<p class="news-note" data-cms-key="page.text.153">بالاشتراك أنت توافق على تلقّي رسائل بريدية من كوبتيفاي. يمكنك إلغاء الاشتراك في أي وقت.</p>
 </div>
 </section>
 </main>
@@ -1675,9 +1721,9 @@ section{scroll-margin-top:86px}
 <p class="foot-about" data-cms-key="auto.text.170" style="font-size:14px">
           عندك سؤال أو اقتراح لحلقة قادمة؟ راسلنا وسنرد عليك في أقرب وقت.
         </p>
-<a class="foot-mail" href="mailto:hello@coptify.com">
+<a class="foot-mail" href="mailto:coptify.page@gmail.com">
 <svg aria-hidden="true" class="ic"><use href="#i-mail"></use></svg>
-          hello@coptify.com
+          coptify.page@gmail.com
         </a>
 <div class="socials">
 <a aria-label="صفحتنا على فيسبوك" href="https://www.facebook.com/coptify" rel="noopener" target="_blank">
@@ -2029,9 +2075,6 @@ section{scroll-margin-top:86px}
         </div>
         <div class="modal-text">${bodyHTML}</div>
         <div class="modal-actions">
-          <a class="btn btn-gold btn-sm" href="#newsletter" data-close-link>
-            <svg class="ic" aria-hidden="true"><use href="#i-mail"></use></svg> اشترك لتصلك المقالات
-          </a>
           <button class="btn btn-outline btn-sm" type="button" data-close>إغلاق</button>
         </div>
       </div>
@@ -2136,56 +2179,6 @@ section{scroll-margin-top:86px}
 
   runGlossFilter();
 
-  /* ============ NEWSLETTER FORM ============ */
-  const newsForm  = $('#newsForm');
-  const newsEmail = $('#newsEmail');
-  const newsMsg   = $('#newsMsg');
-  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  newsForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const value = newsEmail.value.trim();
-
-    if (value === ''){
-      showNewsMsg('من فضلك أدخل بريدك الإلكتروني أولًا.', true);
-      newsEmail.classList.add('error');
-      newsEmail.focus();
-      return;
-    }
-    if (!emailRx.test(value)){
-      showNewsMsg('هذا البريد لا يبدو صحيحًا. تأكّد من كتابته بصيغة مثل: name@example.com', true);
-      newsEmail.classList.add('error');
-      newsEmail.focus();
-      return;
-    }
-
-    newsEmail.classList.remove('error');
-    const btn = newsForm.querySelector('button[type="submit"]');
-    const original = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = 'جارٍ التسجيل…';
-
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.innerHTML = original;
-      showNewsMsg('تم تسجيلك بنجاح 🎉 ستصلك حلقة الجمعة القادمة على بريدك.', false);
-      newsEmail.value = '';
-    }, 900);
-  });
-
-  newsEmail.addEventListener('input', () => {
-    if (newsEmail.classList.contains('error') && emailRx.test(newsEmail.value.trim())){
-      newsEmail.classList.remove('error');
-      newsMsg.classList.remove('show');
-    }
-  });
-
-  function showNewsMsg(text, isError){
-    newsMsg.textContent = text;
-    newsMsg.classList.toggle('err', !!isError);
-    newsMsg.classList.add('show');
-  }
-
   /* ============ SMOOTH ANCHOR + MOBILE CLOSE ============ */
   $$('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
@@ -2270,6 +2263,7 @@ section{scroll-margin-top:86px}
       return [...document.querySelectorAll(selectors)].filter(el=>{
         if(el.closest('#epGrid,.modal,[aria-hidden=\"true\"]')) return false;
         if(!el.textContent || !el.textContent.trim() || el.matches('[data-cms-key]')) return false;
+        if(el.querySelector('[data-cms-key]')) return false;
         return !el.querySelector(selectors);
       });
     }

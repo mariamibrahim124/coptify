@@ -8,16 +8,19 @@ using Coptify.Web.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// PostgreSQL connection from Blitz.cloud
+// Use PostgreSQL in deployed environments and the checked-in SQLite database locally.
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (string.IsNullOrWhiteSpace(connectionString))
 {
-    throw new InvalidOperationException("DATABASE_URL is not configured.");
+    builder.Services.AddDbContext<AppDbContext>(o =>
+        o.UseSqlite("Data Source=coptify.db"));
 }
-
-builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseNpgsql(connectionString));
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(o =>
+        o.UseNpgsql(connectionString));
+}
 
 builder.Services.AddControllers();
 
@@ -45,6 +48,7 @@ using (var scope = app.Services.CreateScope())
     EnsureAdminTable(db);
     Seed(db);
     SeedAutoContent(db, app.Environment.WebRootPath);
+    NormalizeContactEmails(db);
 }
 
 app.UseStaticFiles();
@@ -141,6 +145,22 @@ static void SeedAutoContent(AppDbContext db, string webRootPath)
     }
 
     db.SaveChanges();
+}
+
+static void NormalizeContactEmails(AppDbContext db)
+{
+    var changed = false;
+
+    foreach (var item in db.SiteContents.Where(x =>
+        x.Value.Contains("hello@coptify.com") || x.Label.Contains("hello@coptify.com")))
+    {
+        item.Value = item.Value.Replace("hello@coptify.com", "coptify.page@gmail.com");
+        item.Label = item.Label.Replace("hello@coptify.com", "coptify.page@gmail.com");
+        changed = true;
+    }
+
+    if (changed)
+        db.SaveChanges();
 }
 
 
@@ -1442,7 +1462,7 @@ static void Seed(AppDbContext db)
                 Key = "page.text.148",
                 Label = "نص الصفحة 148",
                 Section = "faq",
-                Value = "يمكنك إرسال اقتراحك مباشرة إلى بريد المنصة hello@coptify.com ، أو عبر رسالة خاصة على صفحتنا على فيسبوك أو إنستجرام. نقرأ كل الاقتراحات، ونُدرج الأكثر تكرارًا في خطة الحلقات الشهرية."
+                Value = "يمكنك إرسال اقتراحك مباشرة إلى بريد المنصة coptify.page@gmail.com ، أو عبر رسالة خاصة على صفحتنا على فيسبوك أو إنستجرام. نقرأ كل الاقتراحات، ونُدرج الأكثر تكرارًا في خطة الحلقات الشهرية."
             },
 
             new SiteContent

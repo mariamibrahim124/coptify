@@ -102,6 +102,7 @@ function editableCandidates(d){
     if(el.closest('#epGrid,.modal,[aria-hidden=\"true\"]')) return false;
     if(!el.textContent || !el.textContent.trim()) return false;
     if(el.matches('[data-cms-key]')) return false;
+    if(el.querySelector('[data-cms-key]')) return false;
     return !el.querySelector(selectors);
   });
 }
